@@ -1,0 +1,97 @@
+# Public bot-detection test pages.
+# Each target: url, name, optional `extract` map of selectors to scrape,
+# optional `wait_until`, `timeout_ms`, `settle_s`.
+targets:
+  - name: sannysoft
+    url: https://bot.sannysoft.com/
+    settle_s: 4
+    # Sannysoft renders a results table; "passed" rows have green bg.
+    # We just save the screenshot for human eval; no clean numeric score.
+
+  - name: creepjs
+    url: https://abrahamjuliot.github.io/creepjs/
+    settle_s: 8
+    timeout_ms: 90000
+    extract:
+      trust_score: ".trust-score-container .unblurred"
+      fp_id: ".fingerprint-section .unblurred"
+
+  - name: browserleaks
+    url: https://browserleaks.com/javascript
+    settle_s: 4
+
+  - name: browserscan-bot
+    url: https://www.browserscan.net/bot-detection
+    settle_s: 8
+    timeout_ms: 90000
+    extract:
+      verdict: "h1, h2"  # composite verdict near top
+
+  - name: pixelscan-bot
+    url: https://pixelscan.net/bot-check
+    settle_s: 8
+    timeout_ms: 90000
+
+  - name: pixelscan-fp
+    url: https://pixelscan.net/fingerprint-check
+    settle_s: 8
+    timeout_ms: 90000
+
+  # ----- TLS fingerprint endpoints (leftcurvedev_'s filter) -----
+  # These return JSON; screenshot is unimportant, page.content() captures the body.
+
+  - name: tls-peet
+    url: https://tls.peet.ws/api/all
+    settle_s: 2
+    timeout_ms: 30000
+
+  - name: browserleaks-tls
+    url: https://tls.browserleaks.com/json
+    settle_s: 2
+    timeout_ms: 30000
+
+  # ----- Real-world / purpose-built hostile targets -----
+
+  - name: bot-incolumitas
+    url: https://bot.incolumitas.com/
+    settle_s: 10
+    timeout_ms: 90000
+    extract:
+      bot_score: "#bot-score, .bot-score, [class*='botScore'], [id*='score']"
+
+  - name: nowsecure-cf
+    url: https://nowsecure.nl/
+    settle_s: 12
+    timeout_ms: 90000
+
+  - name: crunchbase-cf
+    url: https://www.crunchbase.com/
+    settle_s: 8
+    timeout_ms: 60000
+
+  # ----- Ian's real-world targets (promo-monitor + canadian-smallcap-trading) -----
+
+  - name: canadianinsider
+    url: https://www.canadianinsider.com/
+    settle_s: 6
+    timeout_ms: 60000
+
+  - name: sedarplus
+    url: https://www.sedarplus.ca/landingpage/
+    settle_s: 8
+    timeout_ms: 90000
+
+  - name: ceo-ca
+    url: https://ceo.ca/scan
+    settle_s: 6
+    timeout_ms: 60000
+
+  - name: stockwatch
+    url: https://www.stockwatch.com/News/Search?hours=24&region=C
+    settle_s: 6
+    timeout_ms: 60000
+
+  - name: newsfilecorp
+    url: https://www.newsfilecorp.com/search?q=gold
+    settle_s: 6
+    timeout_ms: 60000
