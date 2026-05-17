@@ -20,6 +20,7 @@ Changes from v1 (commit 10a2b48 and earlier):
 Record schema (per target):
 {
   "browser": str, "target": str, "url": str, "ts": int,
+  "engine_version": str,       # NEW: probed once per session via mod.version()
   "attempts": [
     {
       "ok": bool,              # no Python exception
@@ -373,9 +374,20 @@ def main():
         with mod.session(headless=args.headless) as browser:
             # Emit a marker for stats_sweep to detect true cold-start
             print(f"BROWSER_READY {time.time():.3f}", flush=True)
+            # Probe engine version once per session. Reported in every record
+            # so post-hoc analysis can match verdicts to the binary that
+            # actually launched (binary versions can drift between runs).
+            engine_version = "unknown"
+            try:
+                if hasattr(mod, "version"):
+                    engine_version = mod.version(browser) or "unknown"
+            except Exception as e:
+                engine_version = f"version-probe-fail: {type(e).__name__}"
+            print(f"ENGINE_VERSION {engine_version}", flush=True)
             for t in targets:
                 print(f"  -> {t['name']:30s}", end=" ", flush=True)
                 rec = run_one(browser, b, t, out_dir=out_root)
+                rec["engine_version"] = engine_version
                 best = rec["best_verdict"]
                 maj = rec["majority_verdict"]
                 last_ms = rec["attempts"][-1]["load_ms"]
