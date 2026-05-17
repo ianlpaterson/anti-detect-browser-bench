@@ -1,28 +1,35 @@
 """Camoufox: Firefox fork with C-level fingerprint spoofing.
 
-Pin os='macos' so the spoofed fingerprint is consistent with the host (default
-Camoufox can claim Windows on a macOS box, which Cloudflare's consistency checks
-catch, e.g. canadianinsider.com).
+Config notes:
+- os='macos' makes UA + navigator.platform consistent with the host (Camoufox
+  default can claim Windows on a macOS box, which Cloudflare's consistency
+  checks catch).
+- webgl_config=('Apple', 'Apple M1, or similar') pins the WebGL renderer to an
+  Apple GPU. Without it, Camoufox's random fingerprint sampling can pick an
+  Intel-Mac WebGL combo whose entry is missing from cloverlabs's WebGL DB,
+  causing `ValueError: No WebGL data found for vendor X and renderer Y` and
+  crashing the launch. "Apple M1, or similar" is the 82% mac entry.
+- humanize=True enables bezier-cursor + per-char typing entropy.
+- locale=['en-CA', 'en-US', 'en'] OVERRIDES geoip-derived locale. With geoip=True
+  on a Vancouver IP, Camoufox auto-sets locale to fr-CA which is a real-user
+  rarity (fr-CA speakers are nearly all in Quebec). Explicit en-CA avoids that.
 
-`fingerprint_preset=True` opts into a real in-the-wild Firefox profile (canvas,
-WebGL, audio, fonts, screen, timezone) instead of BrowserForge's synthesized
-defaults. This kwarg was added in the cloverlabs-camoufox fork at v0.5.0
-(2026-03-14). It does NOT exist in the mainline `camoufox` PyPI package, which
-is frozen at v0.4.11 (2025-01-29).
+NOT used here (and why):
+- `fingerprint_preset=True` (cloverlabs feature): crashes on the WebGL DB miss
+  mentioned above. The webgl_config pin works around it but the preset
+  selection itself is unreliable for some renderer combos.
+- `geoip=True`: triggers the fr-CA locale auto-set. Override via explicit
+  locale instead. Re-enable if scraping needs TZ/WebRTC coherence.
 
-REQUIRES: cloverlabs-camoufox >= 0.5.0 (NOT the upstream `camoufox` package).
-  pip uninstall -y camoufox
-  pip install -U cloverlabs-camoufox
+KNOWN LIMITATION: Camoufox v135's TLS cipher list includes 0xC009
+(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA) which Mozilla removed between Firefox
+135 and 150. JA4 doesn't match any current real Firefox; strict-JA4 CF configs
+(e.g., canadianinsider.com) flag this. Standard CF sites (reddit, medium,
+dev.to, github) pass cleanly.
+
+REQUIRES: cloverlabs-camoufox >= 0.5.0 (Python 3.10+).
+  pip install cloverlabs-camoufox[geoip]
   python -m camoufox fetch
-
-Notes on binary compatibility:
-- We use the v135 Firefox binary. cloverlabs ships two preset bundles:
-  fingerprint-presets.json (30 macOS presets, pre-v149) and
-  fingerprint-presets-v150.json (67 macOS presets, v149+). With a v135 binary,
-  the older 30-preset bundle is auto-selected and the UA is regex-rewritten to
-  match the binary version, so presets are still applied correctly.
-- locale, geoip, humanize are deliberately left off here. Add geoip=True if
-  the proxy/exit-IP needs lat/long/timezone consistency for Cloudflare.
 """
 from contextlib import contextmanager
 from camoufox.sync_api import Camoufox
@@ -33,6 +40,8 @@ def session(headless: bool = False):
     with Camoufox(
         headless=headless,
         os="macos",
-        fingerprint_preset=True,
+        webgl_config=("Apple", "Apple M1, or similar"),
+        humanize=True,
+        locale=["en-CA", "en-US", "en"],
     ) as browser:
         yield browser
