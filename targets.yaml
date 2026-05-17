@@ -176,3 +176,21 @@ targets:
     settle_s: 10
     timeout_ms: 60000
     wait_until: domcontentloaded
+
+  - name: indeed-jobs
+    url: https://www.indeed.com/jobs?q=engineer
+    settle_s: 8
+    timeout_ms: 45000
+    wait_until: domcontentloaded
+
+  - name: stackoverflow
+    url: https://stackoverflow.com/questions/tagged/python
+    settle_s: 6
+    timeout_ms: 45000
+    wait_until: domcontentloaded
+
+  - name: glassdoor
+    url: https://www.glassdoor.com/Reviews/index.htm
+    settle_s: 8
+    timeout_ms: 45000
+    wait_until: domcontentloaded
