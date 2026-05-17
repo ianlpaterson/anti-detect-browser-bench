@@ -37,3 +37,14 @@ def session(headless: bool = False):
     finally:
         browser.close()
         p.stop()
+
+
+def version(browser) -> str:
+    """Engine version (rebrowser bundled Chromium build)."""
+    try:
+        v = getattr(browser, "version", None)
+        if v and isinstance(v, str):
+            return f"Chromium {v} (rebrowser bundle)"
+    except Exception:
+        pass
+    return "Chromium unknown (rebrowser bundle)"

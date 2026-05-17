@@ -263,6 +263,41 @@ class _NoDriverBrowser:
         # so .new_context().new_page() in the bench still works.
         return self
 
+    @property
+    def version(self) -> str:
+        """Underlying system Chrome version (best-effort, lazy).
+
+        nodriver launches the host's system Chrome binary; we probe it
+        directly via subprocess instead of reaching into nodriver's CDP
+        connection (which has shifted API shape across nodriver versions).
+        """
+        try:
+            return _system_chrome_version() or ""
+        except Exception:
+            return ""
+
+
+def _system_chrome_version() -> str:
+    """Read system Chrome / Chromium --version output. macOS + Linux paths."""
+    import subprocess
+    candidates = (
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "/Applications/Chromium.app/Contents/MacOS/Chromium",
+        "/usr/bin/google-chrome",
+        "/usr/bin/chromium-browser",
+        "/usr/bin/chromium",
+    )
+    for path in candidates:
+        try:
+            r = subprocess.run(
+                [path, "--version"], capture_output=True, text=True, timeout=10
+            )
+            if r.returncode == 0 and r.stdout.strip():
+                return r.stdout.strip()
+        except Exception:
+            continue
+    return ""
+
 
 # ---------------------------------------------------------------------------
 # Factory
@@ -300,3 +335,23 @@ def session(headless: bool = False):
             loop.close()
         except Exception:
             pass
+
+
+def version(browser) -> str:
+    """Engine version string. Probes system Chrome that nodriver launches."""
+    try:
+        v = getattr(browser, "version", None)
+        if v and isinstance(v, str):
+            # Already in "Google Chrome 147.0.7049.0" form from
+            # _system_chrome_version, so don't double-prefix "Chromium".
+            return f"{v} (nodriver, system browser)"
+    except Exception:
+        pass
+    # Fallback: probe even if browser arg is something other than _NoDriverBrowser
+    try:
+        v = _system_chrome_version()
+        if v:
+            return f"{v} (nodriver, system browser)"
+    except Exception:
+        pass
+    return "Chromium unknown (nodriver, system browser)"

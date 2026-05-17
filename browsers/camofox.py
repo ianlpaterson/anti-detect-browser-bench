@@ -45,3 +45,14 @@ def session(headless: bool = False):
         locale=["en-CA", "en-US", "en"],
     ) as browser:
         yield browser
+
+
+def version(browser) -> str:
+    """Engine version (Camoufox bundled Firefox). Best-effort."""
+    try:
+        v = getattr(browser, "version", None)
+        if v and isinstance(v, str):
+            return f"Firefox {v} (camoufox)"
+    except Exception:
+        pass
+    return "Firefox unknown (camoufox)"

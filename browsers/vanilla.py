@@ -12,3 +12,14 @@ def session(headless: bool = False):
     finally:
         browser.close()
         p.stop()
+
+
+def version(browser) -> str:
+    """Engine version string (e.g. 'Chromium 147.0.7049.0'). Best-effort."""
+    try:
+        v = getattr(browser, "version", None)
+        if v and isinstance(v, str):
+            return f"Chromium {v}"
+    except Exception:
+        pass
+    return "Chromium unknown"

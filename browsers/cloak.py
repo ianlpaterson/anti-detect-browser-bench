@@ -19,3 +19,14 @@ def session(headless: bool = False):
             browser.close()
         except Exception:
             pass
+
+
+def version(browser) -> str:
+    """Engine version (CloakBrowser bundled Chromium). Best-effort."""
+    try:
+        v = getattr(browser, "version", None)
+        if v and isinstance(v, str):
+            return f"Chromium {v} (cloak)"
+    except Exception:
+        pass
+    return "Chromium unknown (cloak)"
