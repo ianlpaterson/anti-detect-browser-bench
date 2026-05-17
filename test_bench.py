@@ -396,3 +396,117 @@ class TestBrowserAdapters:
             pytest.skip(f"{name} SDK not installed: {e}")
         assert hasattr(mod, "session"), f"{name} missing session()"
         assert callable(mod.session), f"{name}.session is not callable"
+
+
+# ---------------------------------------------------------------------------
+# Phase 2: uniform version() across all 6 adapters.
+# Tests cover the "happy path" (browser.version returns a string), the
+# "missing attr" fallback (returns 'unknown'), and the engine-name token
+# in the result (so a downstream consumer can distinguish Chromium vs
+# Firefox without parsing).
+# ---------------------------------------------------------------------------
+
+
+class TestAdapterVersion:
+    EXPECTED_ENGINE = {
+        "vanilla": "Chromium",
+        "patchright": "Chrome",       # uses channel=chrome (system Chrome)
+        "rebrowser": "Chromium",
+        "camofox": "Firefox",
+        "cloak": "Chromium",
+        "nodriver": "Chrome",         # system Chrome, probed via subprocess
+    }
+
+    @pytest.mark.parametrize("name", list(EXPECTED_ENGINE.keys()))
+    def test_adapter_module_has_version(self, name):
+        try:
+            mod = __import__(f"browsers.{name}", fromlist=["version"])
+        except ImportError as e:
+            pytest.skip(f"{name} SDK not installed: {e}")
+        assert hasattr(mod, "version"), f"{name} missing version()"
+        assert callable(mod.version), f"{name}.version is not callable"
+
+    @pytest.mark.parametrize("name", [
+        "vanilla", "patchright", "cloak", "camofox", "rebrowser"
+    ])
+    def test_playwright_adapters_use_browser_version_attr(self, name):
+        # VERIFIED: Playwright-derived backends expose `.version` as a string
+        # property. Adapter version() reads it and wraps with engine + suffix.
+        try:
+            mod = __import__(f"browsers.{name}", fromlist=["version"])
+        except ImportError as e:
+            pytest.skip(f"{name} SDK not installed: {e}")
+        fake = MagicMock()
+        fake.version = "147.0.7049.0"
+        result = mod.version(fake)
+        assert isinstance(result, str)
+        assert "147.0.7049.0" in result
+        assert self.EXPECTED_ENGINE[name] in result
+
+    @pytest.mark.parametrize("name", [
+        "vanilla", "patchright", "cloak", "camofox", "rebrowser"
+    ])
+    def test_playwright_adapters_handle_missing_version(self, name):
+        # VERIFIED: spec=[] strips auto-mock attrs, so getattr(fake, "version")
+        # returns None → adapter falls back to "<engine> unknown".
+        try:
+            mod = __import__(f"browsers.{name}", fromlist=["version"])
+        except ImportError as e:
+            pytest.skip(f"{name} SDK not installed: {e}")
+        fake = MagicMock(spec=[])
+        result = mod.version(fake)
+        assert isinstance(result, str)
+        assert "unknown" in result.lower()
+        assert self.EXPECTED_ENGINE[name] in result
+
+    def test_nodriver_version_uses_subprocess_probe(self, mocker):
+        # VERIFIED: nodriver.py defines _system_chrome_version() that shells
+        # out to chrome --version. Mock the function so the test runs on
+        # hosts without Chrome installed (this VPS).
+        try:
+            from browsers import nodriver as nodriver_mod
+        except ImportError as e:
+            pytest.skip(f"nodriver SDK not installed: {e}")
+        mocker.patch.object(
+            nodriver_mod,
+            "_system_chrome_version",
+            return_value="Google Chrome 147.0.7049.0",
+        )
+        fake_browser = MagicMock(spec=[])  # no .version attr
+        result = nodriver_mod.version(fake_browser)
+        assert "Google Chrome 147.0.7049.0" in result
+        assert "nodriver" in result
+
+    def test_nodriver_version_fallback_when_chrome_missing(self, mocker):
+        # ORACLE: if no Chrome binary is found on disk and the wrapped browser
+        # exposes no .version, adapter returns "Chromium unknown ...".
+        try:
+            from browsers import nodriver as nodriver_mod
+        except ImportError as e:
+            pytest.skip(f"nodriver SDK not installed: {e}")
+        mocker.patch.object(
+            nodriver_mod, "_system_chrome_version", return_value=""
+        )
+        fake_browser = MagicMock(spec=[])
+        result = nodriver_mod.version(fake_browser)
+        assert "unknown" in result.lower()
+        assert "nodriver" in result
+
+    def test_nodriver_browser_version_property_calls_probe(self, mocker):
+        # VERIFIED: _NoDriverBrowser.version property defers to
+        # _system_chrome_version, so version() can use the same getattr
+        # path as the Playwright adapters.
+        try:
+            from browsers import nodriver as nodriver_mod
+        except ImportError as e:
+            pytest.skip(f"nodriver SDK not installed: {e}")
+        mocker.patch.object(
+            nodriver_mod, "_system_chrome_version",
+            return_value="Google Chrome 147.0.7049.0",
+        )
+        # Build a _NoDriverBrowser without going through session().
+        wrapper = nodriver_mod._NoDriverBrowser.__new__(
+            nodriver_mod._NoDriverBrowser
+        )
+        # Property reads neither _browser nor _loop, so no init required.
+        assert wrapper.version == "Google Chrome 147.0.7049.0"
