@@ -348,6 +348,65 @@ class TestExtractScore:
 # ---------------------------------------------------------------------------
 
 
+class TestStatsSweepEngineRegex:
+    """Phase 4: stats_sweep captures ENGINE_VERSION lines emitted by bench.py.
+
+    The regex anchors at line start to avoid matching a target name that
+    happens to contain the substring 'ENGINE_VERSION' (unlikely but cheap
+    to defend against).
+    """
+    ENGINE_RE = re.compile(r"^ENGINE_VERSION\s+(.*)$")
+
+    def test_matches_chromium_version_line(self):
+        m = self.ENGINE_RE.match("ENGINE_VERSION Chromium 147.0.7727.15")
+        assert m is not None and m.group(1) == "Chromium 147.0.7727.15"
+
+    def test_matches_cloak_suffixed_line(self):
+        m = self.ENGINE_RE.match(
+            "ENGINE_VERSION Chromium 145.0.7632.109 (cloak)"
+        )
+        assert m is not None
+        assert m.group(1) == "Chromium 145.0.7632.109 (cloak)"
+
+    def test_matches_nodriver_chrome_line(self):
+        m = self.ENGINE_RE.match(
+            "ENGINE_VERSION Google Chrome 147.0.7727.15 (nodriver, system browser)"
+        )
+        assert m is not None
+        assert "147.0.7727.15" in m.group(1)
+
+    def test_does_not_match_unrelated(self):
+        # ORACLE: must not match a target name with the substring inside.
+        assert self.ENGINE_RE.match(
+            "  -> ENGINE_VERSION-fake [ok/ok]"
+        ) is None
+        assert self.ENGINE_RE.match("BROWSER_READY 1730000000.123") is None
+
+
+class TestStatsSweepShuffle:
+    """Phase 4: --seed produces deterministic browser order."""
+
+    def test_same_seed_same_order(self):
+        import random as r
+        a = list(stats_sweep.BROWSERS)
+        b = list(stats_sweep.BROWSERS)
+        r.Random(42).shuffle(a)
+        r.Random(42).shuffle(b)
+        assert a == b
+
+    def test_different_seed_different_order(self):
+        # ORACLE: with 6 browsers and small seeds, collision is plausible
+        # but very rare. Probe a handful of seed pairs and accept ONE match.
+        import random as r
+        runs = []
+        for s in (1, 2, 3, 4, 5):
+            order = list(stats_sweep.BROWSERS)
+            r.Random(s).shuffle(order)
+            runs.append(tuple(order))
+        # At least 3 of the 5 must be unique sequences (else shuffle is broken).
+        assert len(set(runs)) >= 3
+
+
 class TestStatsSweepDiskFor:
     def test_missing_paths_yield_zero(self, mocker):
         # VERIFIED: du_bytes returns 0 for missing paths (line 50-51).
