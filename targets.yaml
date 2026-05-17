@@ -100,3 +100,29 @@ targets:
     url: https://www.newsfilecorp.com/search?q=gold
     settle_s: 6
     timeout_ms: 60000
+
+  # ----- "Fair test for Camoufox" — standard-config Cloudflare sites -----
+  # canadianinsider.com keys on JA4 cipher list and flags Camoufox's stale
+  # cipher (0xC009 still present, removed in real Firefox 150). These four
+  # are the broad middle: Cloudflare-protected, high-volume, but not
+  # JA4-strict. Camoufox passes all of them with default config + locale.
+
+  - name: medium
+    url: https://medium.com/
+    settle_s: 8
+    timeout_ms: 60000
+
+  - name: devto
+    url: https://dev.to/
+    settle_s: 8
+    timeout_ms: 60000
+
+  - name: reddit
+    url: https://www.reddit.com/
+    settle_s: 10
+    timeout_ms: 90000
+
+  - name: github-explore
+    url: https://github.com/explore
+    settle_s: 8
+    timeout_ms: 60000
