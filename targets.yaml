@@ -126,3 +126,53 @@ targets:
     url: https://github.com/explore
     settle_s: 8
     timeout_ms: 60000
+
+  # ----- "How to scrape X" demo targets (SEO-identified high-search-interest) -----
+  # These are the sites readers Google "how to scrape X" for. Bench them so the
+  # post can speak to which browser passes which. Hostile-protection variety:
+  # Akamai (linkedin, booking), Turnstile (google, x), behavioral (amazon, tiktok),
+  # Camoufox-publicly-cited (instagram).
+  # Conservative timeouts + domcontentloaded — these targets are aggressive and
+  # 'load' may never fire if a CF beacon streams.
+
+  - name: linkedin-jobs
+    url: https://www.linkedin.com/jobs/search?keywords=engineer
+    settle_s: 8
+    timeout_ms: 45000
+    wait_until: domcontentloaded
+
+  - name: amazon-product
+    url: https://www.amazon.com/dp/B08N5WRWNW
+    settle_s: 8
+    timeout_ms: 45000
+    wait_until: domcontentloaded
+
+  - name: google-search
+    url: https://www.google.com/search?q=anti-detect+browser
+    settle_s: 8
+    timeout_ms: 45000
+    wait_until: domcontentloaded
+
+  - name: instagram-post
+    url: https://www.instagram.com/p/CwgPe2erjLY/
+    settle_s: 8
+    timeout_ms: 45000
+    wait_until: domcontentloaded
+
+  - name: tiktok-user
+    url: https://www.tiktok.com/@tiktok
+    settle_s: 8
+    timeout_ms: 45000
+    wait_until: domcontentloaded
+
+  - name: booking-search
+    url: https://www.booking.com/searchresults.html?ss=Victoria%2C+BC
+    settle_s: 10
+    timeout_ms: 60000
+    wait_until: domcontentloaded
+
+  - name: x-explore
+    url: https://x.com/explore
+    settle_s: 10
+    timeout_ms: 60000
+    wait_until: domcontentloaded
