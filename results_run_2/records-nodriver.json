@@ -1,0 +1,1163 @@
+[
+  {
+    "browser": "nodriver",
+    "target": "sannysoft",
+    "url": "https://bot.sannysoft.com/",
+    "ts": 1779005649,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 8650,
+        "final_url": "https://bot.sannysoft.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Antibot",
+        "body_len": 40784,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 6456,
+        "final_url": "https://bot.sannysoft.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Antibot",
+        "body_len": 40784,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "creepjs",
+    "url": "https://abrahamjuliot.github.io/creepjs/",
+    "ts": 1779005668,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 23018,
+        "final_url": "https://abrahamjuliot.github.io/creepjs/",
+        "status": null,
+        "main_statuses": [],
+        "title": "CreepJS",
+        "body_len": 287238,
+        "score": {
+          "trust_score": "",
+          "fp_id": ""
+        },
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 21451,
+        "final_url": "https://abrahamjuliot.github.io/creepjs/",
+        "status": null,
+        "main_statuses": [],
+        "title": "CreepJS",
+        "body_len": 287263,
+        "score": {
+          "trust_score": "",
+          "fp_id": ""
+        },
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {
+      "trust_score": "",
+      "fp_id": ""
+    },
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "browserleaks",
+    "url": "https://browserleaks.com/javascript",
+    "ts": 1779005717,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 6571,
+        "final_url": "https://browserleaks.com/javascript",
+        "status": null,
+        "main_statuses": [],
+        "title": "JavaScript Browser Information - BrowserLeaks",
+        "body_len": 35255,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 6469,
+        "final_url": "https://browserleaks.com/javascript",
+        "status": null,
+        "main_statuses": [],
+        "title": "JavaScript Browser Information - BrowserLeaks",
+        "body_len": 35257,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "browserscan-bot",
+    "url": "https://www.browserscan.net/bot-detection",
+    "ts": 1779005734,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 11232,
+        "final_url": "https://www.browserscan.net/bot-detection",
+        "status": null,
+        "main_statuses": [],
+        "title": "BrowserScan - Robot Detection/WebDriver | BrowserScan",
+        "body_len": 457507,
+        "score": {
+          "verdict": "Internet Speed Test"
+        },
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 11422,
+        "final_url": "https://www.browserscan.net/bot-detection",
+        "status": null,
+        "main_statuses": [],
+        "title": "BrowserScan - Robot Detection/WebDriver | BrowserScan",
+        "body_len": 460383,
+        "score": {
+          "verdict": "Internet Speed Test"
+        },
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {
+      "verdict": "Internet Speed Test"
+    },
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "pixelscan-bot",
+    "url": "https://pixelscan.net/bot-check",
+    "ts": 1779005760,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 13532,
+        "final_url": "https://pixelscan.net/bot-check",
+        "status": null,
+        "main_statuses": [],
+        "title": "Bot detection test to check if your browser looks automated | Pixelscan",
+        "body_len": 252847,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12881,
+        "final_url": "https://pixelscan.net/bot-check",
+        "status": null,
+        "main_statuses": [],
+        "title": "Bot detection test to check if your browser looks automated | Pixelscan",
+        "body_len": 254378,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "pixelscan-fp",
+    "url": "https://pixelscan.net/fingerprint-check",
+    "ts": 1779005791,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12547,
+        "final_url": "https://pixelscan.net/fingerprint-check",
+        "status": null,
+        "main_statuses": [],
+        "title": "Check browser fingerprinting with Pixelscan \ud83d\udd0eAnalyze your digital trail",
+        "body_len": 321006,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12434,
+        "final_url": "https://pixelscan.net/fingerprint-check",
+        "status": null,
+        "main_statuses": [],
+        "title": "Check browser fingerprinting with Pixelscan \ud83d\udd0eAnalyze your digital trail",
+        "body_len": 321006,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "tls-peet",
+    "url": "https://tls.peet.ws/api/all",
+    "ts": 1779005820,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 4114,
+        "final_url": "https://tls.peet.ws/api/all",
+        "status": null,
+        "main_statuses": [],
+        "title": "",
+        "body_len": 9953,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 4095,
+        "final_url": "https://tls.peet.ws/api/all",
+        "status": null,
+        "main_statuses": [],
+        "title": "",
+        "body_len": 10477,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "browserleaks-tls",
+    "url": "https://tls.browserleaks.com/json",
+    "ts": 1779005832,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 4040,
+        "final_url": "https://tls.browserleaks.com/json",
+        "status": null,
+        "main_statuses": [],
+        "title": "",
+        "body_len": 1396,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 3940,
+        "final_url": "https://tls.browserleaks.com/json",
+        "status": null,
+        "main_statuses": [],
+        "title": "",
+        "body_len": 1396,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "bot-incolumitas",
+    "url": "https://bot.incolumitas.com/",
+    "ts": 1779005844,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "gated",
+        "load_ms": 164636,
+        "final_url": "https://bot.incolumitas.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Bot / Headless Chrome Detection Tests",
+        "body_len": 62838,
+        "score": {
+          "bot_score": ""
+        },
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "gated",
+        "load_ms": 124116,
+        "final_url": "https://bot.incolumitas.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Bot / Headless Chrome Detection Tests",
+        "body_len": 62374,
+        "score": {
+          "bot_score": ""
+        },
+        "error": null
+      }
+    ],
+    "majority_verdict": "gated",
+    "score": {
+      "bot_score": ""
+    },
+    "best_verdict": "gated",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "rebrowser-detector",
+    "url": "https://bot-detector.rebrowser.net/",
+    "ts": 1779006137,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12174,
+        "final_url": "https://bot-detector.rebrowser.net/",
+        "status": null,
+        "main_statuses": [],
+        "title": "rebrowser-bot-detector",
+        "body_len": 5898,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12027,
+        "final_url": "https://bot-detector.rebrowser.net/",
+        "status": null,
+        "main_statuses": [],
+        "title": "rebrowser-bot-detector",
+        "body_len": 5886,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "nowsecure-cf",
+    "url": "https://nowsecure.nl/",
+    "ts": 1779006165,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 15241,
+        "final_url": "https://nowsecure.nl/",
+        "status": null,
+        "main_statuses": [],
+        "title": "nowsecure.nl",
+        "body_len": 179832,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 14353,
+        "final_url": "https://nowsecure.nl/",
+        "status": null,
+        "main_statuses": [],
+        "title": "nowsecure.nl",
+        "body_len": 179832,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "crunchbase-cf",
+    "url": "https://www.crunchbase.com/",
+    "ts": 1779006199,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12279,
+        "final_url": "https://www.crunchbase.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Crunchbase",
+        "body_len": 827623,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 11681,
+        "final_url": "https://www.crunchbase.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Crunchbase",
+        "body_len": 827623,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "canadianinsider",
+    "url": "https://www.canadianinsider.com/",
+    "ts": 1779006227,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "gated",
+        "load_ms": 8338,
+        "final_url": "https://www.canadianinsider.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Just a moment...",
+        "body_len": 31503,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 14243,
+        "final_url": "https://www.canadianinsider.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Canadian Insider | Insider Filings, News and Alerts on the Canadian Stock Market",
+        "body_len": 75066,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 10450,
+        "final_url": "https://www.canadianinsider.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Canadian Insider | Insider Filings, News and Alerts on the Canadian Stock Market",
+        "body_len": 73946,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "sedarplus",
+    "url": "https://www.sedarplus.ca/landingpage/",
+    "ts": 1779006274,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "gated",
+        "load_ms": 13817,
+        "final_url": "https://www.sedarplus.ca/landingpage/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Error",
+        "body_len": 3064,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "gated",
+        "load_ms": 12985,
+        "final_url": "https://www.sedarplus.ca/landingpage/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Error",
+        "body_len": 3072,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "gated",
+    "score": {},
+    "best_verdict": "gated",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "ceo-ca",
+    "url": "https://ceo.ca/scan",
+    "ts": 1779006304,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 19362,
+        "final_url": "https://ceo.ca/scan",
+        "status": null,
+        "main_statuses": [],
+        "title": "$SCAN.V - Liberty Defense Holdings Ltd. | CEO.CA",
+        "body_len": 286022,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 11967,
+        "final_url": "https://ceo.ca/scan",
+        "status": null,
+        "main_statuses": [],
+        "title": "$SCAN.V - Liberty Defense Holdings Ltd. | CEO.CA",
+        "body_len": 267035,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "stockwatch",
+    "url": "https://www.stockwatch.com/News/Search?hours=24&region=C",
+    "ts": 1779006340,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 13939,
+        "final_url": "https://www.stockwatch.com/News/Search?hours=24&region=C",
+        "status": null,
+        "main_statuses": [],
+        "title": "Stockwatch",
+        "body_len": 74120,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 10489,
+        "final_url": "https://www.stockwatch.com/News/Search?hours=24&region=C",
+        "status": null,
+        "main_statuses": [],
+        "title": "Stockwatch",
+        "body_len": 59406,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "newsfilecorp",
+    "url": "https://www.newsfilecorp.com/search?q=gold",
+    "ts": 1779006368,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 11347,
+        "final_url": "https://www.newsfilecorp.com/search?q=gold",
+        "status": null,
+        "main_statuses": [],
+        "title": "Search Newsroom - Newswire Service - Search News Releases | TMX Newsfile",
+        "body_len": 104793,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 9132,
+        "final_url": "https://www.newsfilecorp.com/search?q=gold",
+        "status": null,
+        "main_statuses": [],
+        "title": "Search Newsroom - Newswire Service - Search News Releases | TMX Newsfile",
+        "body_len": 104793,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "medium",
+    "url": "https://medium.com/",
+    "ts": 1779006393,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "gated",
+        "load_ms": 11273,
+        "final_url": "https://medium.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Medium: Read and write stories.",
+        "body_len": 50986,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 10683,
+        "final_url": "https://medium.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Medium: Read and write stories.",
+        "body_len": 49867,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 10346,
+        "final_url": "https://medium.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Medium: Read and write stories.",
+        "body_len": 49867,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "devto",
+    "url": "https://dev.to/",
+    "ts": 1779006439,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 11384,
+        "final_url": "https://dev.to/",
+        "status": null,
+        "main_statuses": [],
+        "title": "DEV Community",
+        "body_len": 284879,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 10851,
+        "final_url": "https://dev.to/",
+        "status": null,
+        "main_statuses": [],
+        "title": "DEV Community",
+        "body_len": 284879,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "reddit",
+    "url": "https://www.reddit.com/",
+    "ts": 1779006465,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 14698,
+        "final_url": "https://www.reddit.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Reddit - The heart of the internet",
+        "body_len": 621936,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 13614,
+        "final_url": "https://www.reddit.com/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Reddit - The heart of the internet",
+        "body_len": 611621,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "github-explore",
+    "url": "https://github.com/explore",
+    "ts": 1779006498,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 13779,
+        "final_url": "https://github.com/explore",
+        "status": null,
+        "main_statuses": [],
+        "title": "Explore GitHub \u00b7 GitHub",
+        "body_len": 332092,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12244,
+        "final_url": "https://github.com/explore",
+        "status": null,
+        "main_statuses": [],
+        "title": "Explore GitHub \u00b7 GitHub",
+        "body_len": 332092,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "linkedin-jobs",
+    "url": "https://www.linkedin.com/jobs/search?keywords=engineer",
+    "ts": 1779006528,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 11702,
+        "final_url": "https://www.linkedin.com/jobs/search?keywords=engineer",
+        "status": null,
+        "main_statuses": [],
+        "title": "309,000+ Engineer jobs in United States",
+        "body_len": 368480,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 11349,
+        "final_url": "https://www.linkedin.com/jobs/search?keywords=engineer",
+        "status": null,
+        "main_statuses": [],
+        "title": "309,000+ Engineer jobs in United States",
+        "body_len": 368494,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "amazon-product",
+    "url": "https://www.amazon.com/dp/B08N5WRWNW",
+    "ts": 1779006555,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 10086,
+        "final_url": "https://www.amazon.com/dp/B08N5WRWNW",
+        "status": null,
+        "main_statuses": [],
+        "title": "Page Not Found",
+        "body_len": 2359,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 9976,
+        "final_url": "https://www.amazon.com/dp/B08N5WRWNW",
+        "status": null,
+        "main_statuses": [],
+        "title": "Page Not Found",
+        "body_len": 2359,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "google-search",
+    "url": "https://www.google.com/search?q=anti-detect+browser",
+    "ts": 1779006579,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 13080,
+        "final_url": "https://www.google.com/search?q=anti-detect+browser&sei=c3wJaqGQE__f0PEP_9LZ2Qo",
+        "status": null,
+        "main_statuses": [],
+        "title": "anti-detect browser - Google Search",
+        "body_len": 1692617,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12734,
+        "final_url": "https://www.google.com/search?q=anti-detect+browser",
+        "status": null,
+        "main_statuses": [],
+        "title": "anti-detect browser - Google Search",
+        "body_len": 1658343,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "instagram-post",
+    "url": "https://www.instagram.com/p/CwgPe2erjLY/",
+    "ts": 1779006609,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 10935,
+        "final_url": "https://www.instagram.com/p/CwgPe2erjLY/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Post isn't available \u2022 Instagram",
+        "body_len": 804023,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 10361,
+        "final_url": "https://www.instagram.com/p/CwgPe2erjLY/",
+        "status": null,
+        "main_statuses": [],
+        "title": "Post isn't available \u2022 Instagram",
+        "body_len": 803820,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "tiktok-user",
+    "url": "https://www.tiktok.com/@tiktok",
+    "ts": 1779006634,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 10012,
+        "final_url": "https://www.tiktok.com/@tiktok",
+        "status": null,
+        "main_statuses": [],
+        "title": "",
+        "body_len": 1767,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 11972,
+        "final_url": "https://www.tiktok.com/@tiktok",
+        "status": null,
+        "main_statuses": [],
+        "title": "TikTok - Make Your Day",
+        "body_len": 384631,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "booking-search",
+    "url": "https://www.booking.com/searchresults.html?ss=Victoria%2C+BC",
+    "ts": 1779006660,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 16188,
+        "final_url": "https://www.booking.com/searchresults.html?ss=Victoria%2C+BC",
+        "status": null,
+        "main_statuses": [],
+        "title": "Booking.com: Search results: Victoria, BC. Book your hotel now!",
+        "body_len": 1621268,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 20478,
+        "final_url": "https://www.booking.com/searchresults.html?ss=Victoria%2C+BC",
+        "status": null,
+        "main_statuses": [],
+        "title": "Booking.com: Search results: Victoria, BC. Book your hotel now!",
+        "body_len": 1635855,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "x-explore",
+    "url": "https://x.com/explore",
+    "ts": 1779006701,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 18150,
+        "final_url": "https://x.com/i/flow/login?redirect_after_login=%2Fexplore",
+        "status": null,
+        "main_statuses": [],
+        "title": "",
+        "body_len": 307628,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12603,
+        "final_url": "https://x.com/i/flow/login?redirect_after_login=%2Fexplore",
+        "status": null,
+        "main_statuses": [],
+        "title": "",
+        "body_len": 307544,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "indeed-jobs",
+    "url": "https://www.indeed.com/jobs?q=engineer",
+    "ts": 1779006735,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 14111,
+        "final_url": "https://www.indeed.com/jobs?q=engineer",
+        "status": null,
+        "main_statuses": [],
+        "title": "Engineer Jobs, Employment | Indeed",
+        "body_len": 1973262,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 14317,
+        "final_url": "https://www.indeed.com/jobs?q=engineer",
+        "status": null,
+        "main_statuses": [],
+        "title": "Engineer Jobs, Employment | Indeed",
+        "body_len": 1989822,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "stackoverflow",
+    "url": "https://stackoverflow.com/questions/tagged/python",
+    "ts": 1779006768,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 12475,
+        "final_url": "https://stackoverflow.com/questions/tagged/python",
+        "status": null,
+        "main_statuses": [],
+        "title": "Newest 'python' Questions - Stack Overflow",
+        "body_len": 402830,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "ok",
+        "load_ms": 9798,
+        "final_url": "https://stackoverflow.com/questions/tagged/python",
+        "status": null,
+        "main_statuses": [],
+        "title": "Newest 'python' Questions - Stack Overflow",
+        "body_len": 401526,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "ok",
+    "score": {},
+    "best_verdict": "ok",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  },
+  {
+    "browser": "nodriver",
+    "target": "glassdoor",
+    "url": "https://www.glassdoor.com/Reviews/index.htm",
+    "ts": 1779006794,
+    "attempts": [
+      {
+        "ok": true,
+        "verdict": "gated",
+        "load_ms": 11990,
+        "final_url": "https://www.glassdoor.com/Reviews/index.htm",
+        "status": null,
+        "main_statuses": [],
+        "title": "Just a moment...",
+        "body_len": 345158,
+        "score": {},
+        "error": null
+      },
+      {
+        "ok": true,
+        "verdict": "gated",
+        "load_ms": 12237,
+        "final_url": "https://www.glassdoor.ca/Reviews/index.htm?countryRedirect=true",
+        "status": null,
+        "main_statuses": [],
+        "title": "Just a moment...",
+        "body_len": 344912,
+        "score": {},
+        "error": null
+      }
+    ],
+    "majority_verdict": "gated",
+    "score": {},
+    "best_verdict": "gated",
+    "engine_version": "Google Chrome 148.0.7778.168 (nodriver, system browser)"
+  }
+]
