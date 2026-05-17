@@ -59,6 +59,16 @@ targets:
     extract:
       bot_score: "#bot-score, .bot-score, [class*='botScore'], [id*='score']"
 
+  - name: rebrowser-detector
+    url: https://bot-detector.rebrowser.net/
+    settle_s: 10
+    timeout_ms: 90000
+
+  - name: scrapfly-antibot
+    url: https://scrapfly.io/web-scraping-tools/antibot-detector
+    settle_s: 10
+    timeout_ms: 90000
+
   - name: nowsecure-cf
     url: https://nowsecure.nl/
     settle_s: 12
