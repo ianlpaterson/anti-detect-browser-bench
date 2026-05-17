@@ -6,3 +6,8 @@ results/
 results-*/
 .DS_Store
 *.log
+
+# Test coverage artifacts
+.coverage
+htmlcov/
+.pytest_cache/
