@@ -37,21 +37,26 @@ import psutil
 ROOT = Path(__file__).parent
 STATS = ROOT / "stats"
 RESULTS = ROOT / "results"
-BROWSERS = ["vanilla", "patchright", "cloak", "camofox", "rebrowser", "nodriver"]
+BROWSERS = [
+    "vanilla", "patchright", "cloak", "camofox", "rebrowser", "nodriver",
+    "curl_baseline",
+]
 
 # Per-browser disk footprint sources (du -sh roots that contribute to "what does this cost")
 # These are macOS paths; adjust if running elsewhere.
 DISK_PATHS = {
-    "vanilla":    [".venv/lib/python3.11/site-packages/playwright",
-                   os.path.expanduser("~/Library/Caches/ms-playwright/chromium-1217")],
-    "patchright": [".venv/lib/python3.11/site-packages/patchright"],
-    "cloak":      [".venv/lib/python3.11/site-packages/cloakbrowser",
-                   os.path.expanduser("~/.cloakbrowser")],
-    "camofox":    [".venv/lib/python3.11/site-packages/camoufox",
-                   os.path.expanduser("~/Library/Caches/camoufox")],
-    "rebrowser":  [".venv/lib/python3.11/site-packages/rebrowser_playwright",
-                   os.path.expanduser("~/Library/Caches/ms-playwright/chromium-1208")],
-    "nodriver":   [".venv/lib/python3.11/site-packages/nodriver"],
+    "vanilla":       [".venv/lib/python3.11/site-packages/playwright",
+                      os.path.expanduser("~/Library/Caches/ms-playwright/chromium-1217")],
+    "patchright":    [".venv/lib/python3.11/site-packages/patchright"],
+    "cloak":         [".venv/lib/python3.11/site-packages/cloakbrowser",
+                      os.path.expanduser("~/.cloakbrowser")],
+    "camofox":       [".venv/lib/python3.11/site-packages/camoufox",
+                      os.path.expanduser("~/Library/Caches/camoufox")],
+    "rebrowser":     [".venv/lib/python3.11/site-packages/rebrowser_playwright",
+                      os.path.expanduser("~/Library/Caches/ms-playwright/chromium-1208")],
+    "nodriver":      [".venv/lib/python3.11/site-packages/nodriver"],
+    # curl_baseline is just the curl_cffi package; no browser binary cache.
+    "curl_baseline": [".venv/lib/python3.11/site-packages/curl_cffi"],
 }
 
 

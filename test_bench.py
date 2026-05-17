@@ -445,7 +445,8 @@ class TestStatsSweepDiskFor:
 
 class TestBrowserAdapters:
     @pytest.mark.parametrize("name", ["vanilla", "patchright", "cloak",
-                                       "camofox", "rebrowser", "nodriver"])
+                                       "camofox", "rebrowser", "nodriver",
+                                       "curl_baseline"])
     def test_adapter_module_has_session(self, name):
         # VERIFIED: bench.run_one expects `mod.session(headless=...)` to be a
         # context manager. If the SDK is missing on this box we skip.
@@ -474,6 +475,7 @@ class TestAdapterVersion:
         "camofox": "Firefox",
         "cloak": "Chromium",
         "nodriver": "Chrome",         # system Chrome, probed via subprocess
+        "curl_baseline": "curl_cffi", # raw HTTP floor, no browser
     }
 
     @pytest.mark.parametrize("name", list(EXPECTED_ENGINE.keys()))
@@ -486,7 +488,8 @@ class TestAdapterVersion:
         assert callable(mod.version), f"{name}.version is not callable"
 
     @pytest.mark.parametrize("name", [
-        "vanilla", "patchright", "cloak", "camofox", "rebrowser"
+        "vanilla", "patchright", "cloak", "camofox", "rebrowser",
+        "curl_baseline",
     ])
     def test_playwright_adapters_use_browser_version_attr(self, name):
         # VERIFIED: Playwright-derived backends expose `.version` as a string
@@ -569,3 +572,36 @@ class TestAdapterVersion:
         )
         # Property reads neither _browser nor _loop, so no init required.
         assert wrapper.version == "Google Chrome 147.0.7049.0"
+
+    def test_curl_baseline_version_falls_back_to_package_version(self, mocker):
+        # VERIFIED: curl_baseline.version() reads getattr(browser, 'version')
+        # FIRST, then falls back to _curl_cffi_version (importlib metadata).
+        # Even with spec=[] (no .version attr), the fallback returns the
+        # installed curl_cffi version — so "unknown" is never reached when
+        # the package is present.
+        try:
+            from browsers import curl_baseline as curl_mod
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        mocker.patch.object(
+            curl_mod, "_curl_cffi_version", return_value="0.99.0"
+        )
+        fake = MagicMock(spec=[])
+        result = curl_mod.version(fake)
+        assert "curl_cffi 0.99.0" in result
+        assert "impersonate" in result
+
+    def test_curl_baseline_version_unknown_when_probe_fails(self, mocker):
+        # ORACLE: if getattr returns nothing AND the package version probe
+        # returns empty, the adapter returns "unknown" with engine token.
+        try:
+            from browsers import curl_baseline as curl_mod
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        mocker.patch.object(
+            curl_mod, "_curl_cffi_version", return_value=""
+        )
+        fake = MagicMock(spec=[])
+        result = curl_mod.version(fake)
+        assert "unknown" in result.lower()
+        assert "curl_cffi" in result
