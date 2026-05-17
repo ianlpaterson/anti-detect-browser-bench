@@ -140,13 +140,26 @@ def measure_browser(browser: str, targets_path: str, out_dir: str) -> dict:
     reader_t = threading.Thread(target=reader, daemon=True)
     reader_t.start()
 
-    # PIDs we have EVER observed as a descendant of the bench subprocess.
-    # If one falls out of `parent.children(recursive=True)` but is still
-    # alive in process_iter (psutil.Process.is_running()), it has reparented
-    # to launchd/init — a "detached helper". We add its RSS to peak and
-    # count it in n_detached so the post-mortem can flag crashes.
-    seen_descendants: set[int] = set()
-    detached_pids: set[int] = set()
+    # Descendants we have ever observed under the bench subprocess, keyed
+    # by (pid, create_time) so a recycled PID can't impersonate the
+    # original process. If a descendant falls out of
+    # `parent.children(recursive=True)` but its psutil.Process identity
+    # still resolves to the same (pid, create_time) AND is_running, it
+    # has reparented away from us — a "detached helper".
+    seen_descendants: dict[int, float] = {}      # pid -> create_time
+    detached_pids: set[int] = set()              # pids charged at least once
+
+    def _identity_matches(pid: int, expected_create: float) -> bool:
+        """True iff PID still resolves to the SAME process we saw earlier.
+        Returns False on PID reuse, dead process, or permission errors."""
+        try:
+            proc_obj = psutil.Process(pid)
+            return (
+                proc_obj.is_running()
+                and abs(proc_obj.create_time() - expected_create) < 0.001
+            )
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            return False
 
     while proc.poll() is None:
         try:
@@ -155,22 +168,23 @@ def measure_browser(browser: str, targets_path: str, out_dir: str) -> dict:
             for c in parent.children(recursive=True):
                 try:
                     current_descendants.add(c.pid)
-                    seen_descendants.add(c.pid)
+                    # Record (pid, create_time) the first time we see this
+                    # child; later iterations don't overwrite, so PID reuse
+                    # by a later unrelated child won't confuse us.
+                    if c.pid not in seen_descendants:
+                        seen_descendants[c.pid] = c.create_time()
                     rss += c.memory_info().rss
                 except (psutil.NoSuchProcess, psutil.AccessDenied):
                     pass
-            # Detached = previously a descendant, no longer one. Verify alive
-            # before charging RSS (some are just normal teardown that finished).
-            for pid in seen_descendants - current_descendants:
-                try:
-                    det = psutil.Process(pid)
-                    if det.is_running():
-                        rss += det.memory_info().rss
+            # Detached = previously a descendant, no longer one, AND the
+            # PID still resolves to the SAME process identity we saw.
+            for pid in set(seen_descendants) - current_descendants:
+                if _identity_matches(pid, seen_descendants[pid]):
+                    try:
+                        rss += psutil.Process(pid).memory_info().rss
                         detached_pids.add(pid)
-                except psutil.NoSuchProcess:
-                    continue
-                except psutil.AccessDenied:
-                    continue
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        continue
             peak_rss = max(peak_rss, rss)
             samples.append((round(time.monotonic() - t0, 2), rss))
         except (psutil.NoSuchProcess, psutil.AccessDenied):
@@ -181,6 +195,15 @@ def measure_browser(browser: str, targets_path: str, out_dir: str) -> dict:
     reader_t.join(timeout=5)
     elapsed = round(time.monotonic() - t0, 2)
 
+    # Filter detached_pids down to those STILL alive after subprocess wait.
+    # A helper that briefly detached but later exited cleanly is normal
+    # teardown, not "crash residue". Without this filter n_detached would
+    # overstate crashes (codex flagged this in Phase 5 review).
+    survived_detached = {
+        pid for pid in detached_pids
+        if _identity_matches(pid, seen_descendants[pid])
+    }
+
     return {
         "browser": browser,
         "engine_version": engine_version,
@@ -190,8 +213,9 @@ def measure_browser(browser: str, targets_path: str, out_dir: str) -> dict:
         "n_targets_hit": len(target_marks),
         "n_ok": sum(1 for _, _, s in target_marks if s == "OK"),
         "n_err": sum(1 for _, _, s in target_marks if s == "ERR"),
-        "n_detached": len(detached_pids),
-        "detached_pids": sorted(detached_pids),
+        "n_detached": len(survived_detached),
+        "detached_pids": sorted(survived_detached),
+        "n_detached_ever": len(detached_pids),  # for forensics
         "target_marks": target_marks,
         "rss_samples": samples,
         "disk": disk,

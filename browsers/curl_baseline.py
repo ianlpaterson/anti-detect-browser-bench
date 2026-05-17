@@ -1,5 +1,10 @@
 """curl_baseline: no-JS HTTP floor for the bench.
 
+REQUIRES: curl_cffi, lxml, cssselect. Selector resolution in
+`_Locator.inner_text` calls `lxml.html.cssselect`, which needs the
+`cssselect` package alongside lxml — installing lxml alone is not
+enough.
+
 Not a real browser; a curl_cffi.Session that impersonates Chrome's TLS+H2
 fingerprint without launching anything that can execute JavaScript. The
 purpose is to set the "what does a raw GET return" baseline against which
@@ -23,6 +28,7 @@ plugs straight into the bench's verdict + records flow.
 """
 from __future__ import annotations
 
+import html as _html
 import os
 import re
 import time
@@ -79,24 +85,32 @@ class _Locator:
     def inner_text(self, timeout: int = 5000) -> str:
         del timeout  # curl_baseline is synchronous; no waiting to do
         if not self._body:
-            return ""
+            # No body to search means the selector has nothing to match;
+            # Playwright raises TimeoutError in this case. We do the same
+            # so bench.extract_score records <extract-fail: TimeoutError>
+            # instead of a misleading empty string.
+            raise TimeoutError(
+                f"curl_baseline: empty body, cannot resolve selector "
+                f"{self._selector!r}"
+            )
         try:
             from lxml import html  # type: ignore
         except ImportError:
             raise RuntimeError(
                 "lxml not installed; cannot resolve selector on static HTML"
             )
-        try:
-            tree = html.fromstring(self._body)
-            matches = tree.cssselect(self._selector)
-            if not matches:
-                return ""
-            text = matches[0].text_content() or ""
-            return text.strip()
-        except Exception as e:
-            # Bench expects inner_text to either return a str or raise;
-            # extract_score catches the raise and emits <extract-fail: ...>.
-            raise
+        tree = html.fromstring(self._body)
+        matches = tree.cssselect(self._selector)
+        if not matches:
+            # Matches Playwright Locator.inner_text() contract: raise
+            # rather than return empty when the selector did not bind.
+            # extract_score catches and stores <extract-fail: TimeoutError>.
+            raise TimeoutError(
+                f"curl_baseline: selector {self._selector!r} matched no "
+                f"element"
+            )
+        text = matches[0].text_content() or ""
+        return text.strip()
 
 
 class _Page:
@@ -192,16 +206,14 @@ class _Page:
         m = _TITLE_RE.search(self._body)
         if not m:
             return ""
-        # Decode common HTML entities a real browser would resolve. Keep
-        # it conservative (no full entity table) to avoid pulling in a dep.
-        raw = m.group(1).strip()
-        return (
-            raw.replace("&amp;", "&")
-            .replace("&lt;", "<")
-            .replace("&gt;", ">")
-            .replace("&quot;", '"')
-            .replace("&#39;", "'")
-        )
+        # html.unescape covers the full HTML5 entity table including the
+        # ones a real browser resolves (&copy;, &hellip;, &nbsp;, numeric
+        # entities like &#xA0;). Hand-rolled mapping previously missed
+        # those and could let block-page titles like "Access&nbsp;Denied"
+        # bypass the gate-title regex.
+        raw = _html.unescape(m.group(1))
+        # Real browsers collapse internal whitespace runs in document.title.
+        return " ".join(raw.split()).strip()
 
     def content(self) -> str:
         return self._body

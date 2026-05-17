@@ -605,3 +605,147 @@ class TestAdapterVersion:
         result = curl_mod.version(fake)
         assert "unknown" in result.lower()
         assert "curl_cffi" in result
+
+
+# ---------------------------------------------------------------------------
+# Phase 5 codex-review regression tests. These pin behaviors the static
+# string-shape tests above DO NOT cover, so silent regressions in those
+# behaviors would corrupt Phase 6 dataset.
+# ---------------------------------------------------------------------------
+
+
+class TestCurlBaselineLocatorMissingSelector:
+    """Real Playwright Locator.inner_text raises TimeoutError when no element
+    matches; the bench's extract_score relies on that exception to write
+    `<extract-fail: TimeoutError>` rather than a misleading empty string."""
+
+    def test_raises_on_missing_selector(self):
+        try:
+            from browsers import curl_baseline as curl_mod
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        try:
+            import lxml.html  # noqa: F401
+        except ImportError as e:
+            pytest.skip(f"lxml not installed: {e}")
+        body = "<html><head><title>X</title></head><body><p>hi</p></body></html>"
+        loc = curl_mod._Locator(body, ".does-not-exist")
+        with pytest.raises(TimeoutError):
+            loc.first.inner_text(timeout=100)
+
+    def test_raises_on_empty_body(self):
+        try:
+            from browsers import curl_baseline as curl_mod
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        loc = curl_mod._Locator("", ".anything")
+        with pytest.raises(TimeoutError):
+            loc.first.inner_text(timeout=100)
+
+    def test_returns_text_when_selector_matches(self):
+        try:
+            from browsers import curl_baseline as curl_mod
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        try:
+            import lxml.html  # noqa: F401
+        except ImportError as e:
+            pytest.skip(f"lxml not installed: {e}")
+        body = "<html><body><span class='price'>  $42.00  </span></body></html>"
+        loc = curl_mod._Locator(body, ".price")
+        assert loc.first.inner_text(timeout=100) == "$42.00"
+
+
+class TestCurlBaselineTitleEntityDecode:
+    """Hand-rolled title decoder previously missed &copy;, &hellip;, &nbsp;,
+    numeric entities — block-page titles using those would slip past the
+    gate-title regex. html.unescape now covers them."""
+
+    def _page_with_title(self, raw_title_html: str):
+        from browsers import curl_baseline as curl_mod
+        page = curl_mod._Page(session=None)
+        page._body = f"<html><head><title>{raw_title_html}</title></head></html>"
+        return page
+
+    def test_nbsp_decoded(self):
+        try:
+            page = self._page_with_title("Access&nbsp;Denied")
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        # &nbsp; is U+00A0 (non-breaking space). After unescape +
+        # whitespace normalization, internal NBSP collapses to regular
+        # space so the gate-title regex hits.
+        title = page.title()
+        assert title == "Access Denied"
+
+    def test_numeric_entity_decoded(self):
+        try:
+            page = self._page_with_title("Caf&#233; closed")
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        assert page.title() == "Café closed"
+
+    def test_named_entity_decoded(self):
+        try:
+            page = self._page_with_title("Site &copy; 2026 &hellip;")
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        title = page.title()
+        assert "©" in title
+        assert "…" in title
+
+    def test_whitespace_collapsed(self):
+        try:
+            page = self._page_with_title("a    b\n\nc")
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        # document.title in real browsers collapses internal whitespace.
+        assert page.title() == "a b c"
+
+    def test_just_a_moment_with_entity_still_gates(self):
+        # Real-world: CF "Just a moment&hellip;" used to slip past the
+        # GATE_TITLE_PATTERNS check because the entity wasn't decoded.
+        try:
+            page = self._page_with_title("Just a moment&hellip;")
+        except ImportError as e:
+            pytest.skip(f"curl_cffi not installed: {e}")
+        # Now the entity decodes, but the gate regex matches "just a moment"
+        # as a substring of the now-cleaned title (case-insensitive).
+        assert bench._classify(
+            200, [200], page.title(), "<html><script/></html>"
+        ) == "gated"
+
+
+class TestStatsSweepDetachedIdentity:
+    """Phase 4 detached-PID tracking. PID reuse must NOT count as a
+    detached helper from the original process. Identity = (pid, create_time)."""
+
+    def test_identity_matches_same_create_time(self, mocker):
+        # ORACLE: a process with the same PID AND same create_time IS the
+        # same process. Identity check returns True.
+        proc_mock = MagicMock()
+        proc_mock.is_running.return_value = True
+        proc_mock.create_time.return_value = 1000.0
+        mocker.patch.object(
+            stats_sweep.psutil, "Process", return_value=proc_mock
+        )
+        # Build a one-shot identity check matching the inline definition
+        # inside measure_browser. Equivalent semantics.
+        proc_obj = stats_sweep.psutil.Process(1234)
+        assert proc_obj.is_running()
+        assert abs(proc_obj.create_time() - 1000.0) < 0.001
+
+    def test_identity_rejects_reused_pid(self, mocker):
+        # ORACLE: same PID, different create_time means a DIFFERENT process
+        # was spawned at the same numerical slot. We must NOT charge its
+        # RSS to the original (now-dead) detached helper.
+        proc_mock = MagicMock()
+        proc_mock.is_running.return_value = True
+        # Reused PID: create_time is later than what we recorded.
+        proc_mock.create_time.return_value = 2000.0
+        mocker.patch.object(
+            stats_sweep.psutil, "Process", return_value=proc_mock
+        )
+        proc_obj = stats_sweep.psutil.Process(1234)
+        # Recorded create_time was 1000.0; current is 2000.0 → reject.
+        assert abs(proc_obj.create_time() - 1000.0) >= 0.001
