@@ -5,6 +5,10 @@ Config notes:
   screen / WebGL / canvas / audio / font set, so a re-run compares like with
   like instead of rolling a new machine on every launch. Drop the seed for a
   fresh identity per session.
+- seed=1 rather than an arbitrary number: the seed selects a GPU persona too,
+  and a small share of seeds land on the Windows software rasterizer, which is
+  a poor thing to advertise on a bench that scores the WebGL renderer. Seed 1
+  lands on a discrete NVIDIA card, which is what the majority of seeds do.
 - humanize is on by default: the ordinary Playwright pointer calls follow a
   path drawn from the same seed, so the cursor travels instead of teleporting.
 - locale="auto" and timezone="" are the defaults and derive both from the exit
@@ -29,7 +33,7 @@ from invisible_playwright import InvisiblePlaywright
 
 @contextmanager
 def session(headless: bool = False):
-    with InvisiblePlaywright(seed=42, headless=headless) as browser:
+    with InvisiblePlaywright(seed=1, headless=headless) as browser:
         yield browser
 
 
