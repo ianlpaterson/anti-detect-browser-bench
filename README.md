@@ -12,7 +12,7 @@ Headed mode by default. Designed for macOS arm64 with a residential IP, but work
 git clone https://github.com/ianlpaterson/anti-detect-browser-bench
 cd anti-detect-browser-bench
 python3 -m venv .venv && . .venv/bin/activate
-pip install playwright patchright cloakbrowser camoufox curl_cffi pyyaml
+pip install playwright patchright cloakbrowser camoufox clearcote curl_cffi pyyaml
 python -m playwright install chromium
 python -m patchright install chromium
 python -m camoufox fetch

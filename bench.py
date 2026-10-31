@@ -342,7 +342,7 @@ def run_browser_subprocess(browser: str, targets_path: str, out_root: str, headl
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("browsers", nargs="+", help="vanilla patchright cloak camofox rebrowser nodriver")
+    ap.add_argument("browsers", nargs="+", help="vanilla patchright cloak camofox rebrowser nodriver clearcote")
     ap.add_argument("--targets", default=str(ROOT / "targets.yaml"))
     ap.add_argument("--out", default=str(RESULTS))
     ap.add_argument("--headless", action="store_true")
