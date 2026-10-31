@@ -6,21 +6,20 @@ turns on human-like mouse, keyboard and scroll input. geoip=True matches the
 timezone, languages and Accept-Language to the proxy or local IP, like the
 cloak adapter.
 
-bench.py opens a fresh new_context() per target. On Windows and Linux,
-launch() defaults to a persistent context (a throwaway profile), which has no
-new_context(), so ephemeral_profile=False asks for a plain Browser there. On
-macOS, launch() runs the Clearcote Docker image (Docker must be running) and
-already returns a Browser.
+bench.py opens a fresh new_context() per target. launch() defaults to a
+persistent context (a throwaway profile), which has no new_context(), so
+ephemeral_profile=False asks for a plain Browser instead. On an Apple Silicon
+Mac with CLEARCOTE_LICENSE_KEY set, launch() runs the native macOS build;
+without a key (or on an Intel Mac) it runs the Clearcote Docker image, so
+Docker must be running.
 """
-import sys
 from contextlib import contextmanager
 import clearcote
 
 
 @contextmanager
 def session(headless: bool = False):
-    opts = {} if sys.platform == "darwin" else {"ephemeral_profile": False}
-    browser = clearcote.launch(headless=headless, humanize=True, geoip=True, **opts)
+    browser = clearcote.launch(headless=headless, humanize=True, geoip=True, ephemeral_profile=False)
     try:
         yield browser
     finally:
